@@ -180,16 +180,24 @@ Remember that the entry point to our ansible configuration is the site.yml file.
 
 ### Commit & Test
 
-1. Commit your changes, create a Pull Request and merge them to master branch, make sure webhook triggered two consequent Jenkins jobs, they ran successfully and copied all the files to your Jenkins-Ansible server into /home/ubuntu/ansible-config-mgt/ directory.
+Commit your changes, create a Pull Request and merge them to master branch, make sure webhook triggered two consequent Jenkins jobs, they ran successfully and copied all the files to your Jenkins-Ansible server into `/home/ubuntu/ansible-config-mgt/` directory.
 
-2. Now run the playbook against your uat inventory and see what happens
-    - ansible-playbook -i inventory/uat.yml \playbooks/site.yml
-    ![Alt text](images/12.24.png)
+Now run the playbook against your uat inventory and see what happens
+```
+ansible-playbook -i inventory/uat.yml \playbooks/site.yml
+```
+![Alt text](images/12.24.png)
 
-3. You should be able to see both of your UAT Web servers configured and you can try to reach them from your browser:
-    1. web uat 1
-    ![Alt text](images/12.25.png)
-    2. web uat 2
-    ![Alt text](images/12.26.png)
+You should be able to see both of your UAT Web servers configured and you can try to reach them from your browser:
+1. web uat 1
 
+![Alt text](images/12.25.png)
+   
+2. web uat 2
+  
+![Alt text](images/12.26.png)
+
+The Ansible architecture now looks like this
+
+![alt text](images/project12_architecture.png)
 
