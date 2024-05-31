@@ -58,7 +58,7 @@ If both Jenkins jobs have completed one after another – you shall see your fil
    
 ![Alt text](images/12.14.png) 
 
-# Step 2 – Refactor Ansible code by importing other playbooks into site.yml
+### Step 2 – Refactor Ansible code by importing other playbooks into site.yml
 ```
 git checkout main
 ```
