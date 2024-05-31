@@ -59,26 +59,37 @@ If both Jenkins jobs have completed one after another – you shall see your fil
 ![Alt text](images/12.14.png) 
 
 # Step 2 – Refactor Ansible code by importing other playbooks into site.yml
-    - git checkout main
-    - git branch refactor
-    - git checkout refactor
+```
+git checkout main
+```
+```   
+git branch refactor
+```
+```
+git checkout refactor
+```
 ![Alt text](images/12.6.png)
 
-1. Within playbooks folder, create a new file and name it site.yml – This file will now be considered as an entry point into the entire infrastructure configuration. Other playbooks will be included here as a reference. In other words, site.yml will become a parent to all other playbooks that will be developed. Including common.yml that you created previously. Dont worry, you will understand more what this means shortly.
+Within playbooks folder, create a new file and name it `site.yml` – This file will now be considered as an entry point into the entire infrastructure configuration. Other playbooks will be included here as a reference. In other words, `site.yml` will become a parent to all other playbooks that will be developed. Including `common.yml` that you created previously. Dont worry, you will understand more what this means shortly.
+
 ![Alt text](images/12.7.png)
 
-2. Create a new folder in root of the repository and name it static-assignments. The static-assignments folder is where all other children playbooks will be stored. This is merely for easy organization of your work. It is not an Ansible specific concept, therefore you can choose how you want to organize your work. You will see why the folder name has a prefix of static very soon. For now, just follow along.
+Create a new folder in root of the repository and name it `static-assignments`. The static-assignments folder is where all other children playbooks will be stored. This is merely for easy organization of your work. It is not an Ansible specific concept, therefore you can choose how you want to organize your work. You will see why the folder name has a prefix of static very soon. For now, just follow along.
+
 ![Alt text](images/12.8.png)
 
-3. Move common.yml file into the newly created static-assignments folder.
+Move common.yml file into the newly created static-assignments folder.
+
 ![Alt text](images/12.9.png)
+
 ![Alt text](images/12.10.png)
 
-4. Inside site.yml file, import common.yml playbook.
-[![Alt text](images/12.11.png)
+Inside site.yml file, import common.yml playbook.
+
+![Alt text](images/12.11.png)
 
 
-5. Run ansible-playbook command against the dev environment
+Run ansible-playbook command against the dev environment
     - Since you need to apply some tasks to your dev servers and wireshark is already installed – you can go ahead and create another playbook under static-assignments and name it common-del.yml. In this playbook, configure deletion of wireshark utility.
     ![Alt text](images/12.12.png)
     - update site.yml with - import_playbook: ../static-assignments/common-del.yml instead of common.yml and run it against dev servers:
