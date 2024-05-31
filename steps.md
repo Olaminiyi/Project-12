@@ -1,62 +1,34 @@
-# ANSIBLE REFACTORING AND STATIC ASSIGNMENTS (IMPORTS AND ROLES)
+# Step 1 – Jenkins job enhancement
+1. Go to your Jenkins-Ansible server and create a new directory called ansible-config-artifact – we will store there all artifacts after each build.
+    - sudo mkdir /home/ubuntu/ansible-config-artifact
 
-In this project we will we need to do the following:
-
-- Refactor the Ansible code
-- Create assignments
-- Use the imports functionality.
-
-Imports allow to effectively re-use previously created playbooks in a new playbook. This helps to organize tasks and reuse them when needed.
-
-To better understand the Ansible artifact re-use, [click here](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse.html).
-
-
-[Code Refactoring](https://en.wikipedia.org/wiki/Code_refactoring) means making changes to the source code without changing expected behaviour of the software. The main idea of refactoring is to enhance code readability, increase maintainability and extensibility, reduce complexity and add proper comments without affecting the logic.
-
-### JENKINS JOB ENHANCEMENT
-
-In our previous jobs, Jenkins was configured to create a directory for every change in the code which consumes space in the Jenkins server. To fix this we will be making changes using copy artifact plugin.
-
-Go to your Jenkins-Ansible server and create a new directory called ansible-config-artifact – we will store there all artifacts after each build.
-```
-sudo mkdir /home/ubuntu/ansible-config-artifact
-```
-Change permissions to this directory, so Jenkins could save files there 
-```
-sudo chmod -R 0777 /home/ubuntu/ansible-config-artifact
-```
-
+2. Change permissions to this directory, so Jenkins could save files there 
+    - sudo chmod -R 0777 /home/ubuntu/ansible-config-artifact
 ![Alt text](images/12.1.png)
 
-Go to Jenkins web console -> Manage Jenkins -> Manage Plugins -> on Available tab search for Copy Artifact and install this plugin without restarting Jenkins
-
+3. Go to Jenkins web console -> Manage Jenkins -> Manage Plugins -> on Available tab search for Copy Artifact and install this plugin without restarting Jenkins
 ![Alt text](images/12.2.png)
 
-Create a new Freestyle project (you have done it in [Project 9](https://github.com/Olaminiyi/Project-9)) and name it save_artifacts.
-In the general configuration: check discard old builds
-put maximum number of build to 2
+3. Create a new Freestyle project (you have done it in Project 9) and name it save_artifacts.
+    - in the general configuration: check discard old builds
+    - put maximum number of build to 2
+    ![Alt text](images/12.3.png)
+    - under Build Triggers: check build after other project are built; in project to watch put 'ansible'
+    - Then save
+    ![Alt text](images/12.4.png)
 
-![Alt text](images/12.3.png)
-   
-Under Build Triggers: check build after other project are built; in project to watch put 'ansible'
-Then save
+4. The main idea of save_artifacts project is to save artifacts into /hgitome/ubuntu/ansible-config-artifact directory. To achieve this, create a Build step and choose Copy artifacts from other project, specify ansible as a source project and /home/ubuntu/ansible-config-artifact as a target directory.
+    - go to configuration of the new project 'save_artifacts'
+    - under build steps
+        - type ansibe as the project name
+        - under artifacts to copy type '**'
+        - under target directory; put - /home/ubuntu/ansible-config-artifact 
+        - Save
+    ![Alt text](images/12.5.png)
 
-![Alt text](images/12.4.png)
-
-The main idea of save_artifacts project is to save artifacts into **/home/ubuntu/ansible-config-artifact** directory. To achieve this, create a Build step and choose Copy artifacts from other project, specify ansible as a source project and **/home/ubuntu/ansible-config-artifact** as a target directory.
-Go to configuration of the new project 'save_artifacts'
-Under build steps
-- type ansibe as the project name
-- under artifacts to copy type '**'
-- under target directory; put - `/home/ubuntu/ansible-config-artifact` 
-- Save
-
-![Alt text](images/12.5.png)
-
-Test your set up by making some change in `README.MD` file inside your `ansible-config-mgt repository` (right inside master branch).
-If both Jenkins jobs have completed one after another – you shall see your files inside `/home/ubuntu/ansible-config-artifact` directory and it will be updated with every commit to your master branch.
-   
-![Alt text](images/12.14.png) 
+5. Test your set up by making some change in README.MD file inside your ansible-config-mgt repository (right inside master branch).
+If both Jenkins jobs have completed one after another – you shall see your files inside /home/ubuntu/ansible-config-artifact directory and it will be updated with every commit to your master branch.
+   ![Alt text](images/12.14.png) 
 
 # Step 2 – Refactor Ansible code by importing other playbooks into site.yml
     - git checkout main
@@ -151,5 +123,4 @@ Step 5 – Commit & Test
     ![Alt text](images/12.25.png)
     2. web uat 2
     ![Alt text](images/12.26.png)
-
 
