@@ -125,19 +125,6 @@ mkdir roles
 ```
 cd roles
 ```    
-After removing unnecessary directories and files, the roles structure should look like this
-
-> └── webserver
->   ├── README.md
->   ├── defaults
->   │   └── main.yml
->   ├── handlers
->   │   └── main.yml
->   ├── meta
->   │   └── main.yml
->   ├── tasks
->   │   └── main.yml
->   └── templates
 
 ![Alt text](images/12.18.png)
 
