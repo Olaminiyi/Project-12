@@ -89,28 +89,42 @@ Inside site.yml file, import common.yml playbook.
 ![Alt text](images/12.11.png)
 
 
-Run ansible-playbook command against the dev environment
-    - Since you need to apply some tasks to your dev servers and wireshark is already installed – you can go ahead and create another playbook under static-assignments and name it common-del.yml. In this playbook, configure deletion of wireshark utility.
-    ![Alt text](images/12.12.png)
-    - update site.yml with - import_playbook: ../static-assignments/common-del.yml instead of common.yml and run it against dev servers:
-    ![Alt text](images/12.13.png)
-    
-    - cd /home/ubuntu/ansible-config-mgt/
-    - ansible-playbook -i inventory/dev.yml playbooks/site.yml
-    ![Alt text](images/12.15.png)
+### Run ansible-playbook command against the dev environment
+Since you need to apply some tasks to your dev servers and wireshark is already installed – you can go ahead and create another playbook under `static-assignments` and name it `common-del.yml`. In this playbook, configure deletion of wireshark utility.
 
-    - Make sure that wireshark is deleted on all the servers by running wireshark --version
-    ![Alt text](images/12.16.png)
+![Alt text](images/12.12.png)
 
-#Step 3 – Configure UAT Webservers with a role ‘Webserver’
-1. Launch 2 fresh EC2 instances using RHEL 8 image, we will use them as our uat servers, so give them names accordingly – Web1-UAT and Web2-UAT.
+Update site.yml with - `import_playbook: ../static-assignments/common-del.yml` instead of common.yml and run it against dev servers:
+
+![Alt text](images/12.13.png)
+
+```   
+cd /home/ubuntu/ansible-config-mgt/
+```
+```
+ansible-playbook -i inventory/dev.yml playbooks/site.yml
+```
+![Alt text](images/12.15.png)
+
+Make sure that wireshark is deleted on all the servers by running wireshark --version
+
+![Alt text](images/12.16.png)
+
+### Step 3 – Configure UAT Webservers with a role ‘Webserver’
+
+Launch 2 fresh EC2 instances using `RHEL 8 image`, we will use them as our uat servers, so give them names accordingly – `Web1-UAT` and `Web2-UAT`.
+
 ![Alt text](images/12.17.png)
-2. To create a role, you must create a directory called roles/, relative to the playbook file or in /etc/ansible/ directory.
-    - There are two ways how you can create this folder structure:
-    - Use an Ansible utility called ansible-galaxy inside ansible-config-mgt/roles directory (you need to create roles directory upfront)
-    - mkdir roles
-    - cd roles
-    
+
+To create a role, you must create a directory called `roles/`, relative to the playbook file or in `/etc/ansible/` directory.
+There are two ways how you can create this folder structure:
+Use an Ansible utility called [ansible-galaxy](https://galaxy.ansible.com/ui/) inside ansible-config-mgt/roles directory (you need to create roles directory upfront).
+```
+mkdir roles
+```
+```
+cd roles
+```    
     After removing unnecessary directories and files, the roles structure should look like this
 
 └── webserver
